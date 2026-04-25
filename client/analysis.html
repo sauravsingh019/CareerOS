@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CareerOS | Resume Analysis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="analysis" data-requires-auth="true">
+    <div class="site-bg"></div>
+    <header class="site-header compact">
+      <a class="brand" href="/index.html">
+        <span class="brand-mark">C</span>
+        <span>CareerOS</span>
+      </a>
+      <nav class="site-nav">
+        <a href="/index.html">Home</a>
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/analysis.html" class="active">Analysis</a>
+        <a href="/chat.html">Coach</a>
+      </nav>
+      <div class="nav-actions">
+        <span id="navUserName" class="nav-user">Guest</span>
+        <button id="logoutButton" class="button button-light" type="button">Logout</button>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <section class="page-hero reveal">
+        <div>
+          <p class="eyebrow">Resume Analysis</p>
+          <h1>Upload once. Understand the gaps clearly.</h1>
+          <p>
+            Parse your PDF resume, extract your strongest skills, and generate a
+            role-focused recommendation set with AI.
+          </p>
+        </div>
+        <div class="page-actions">
+          <button id="runAnalysisButton" class="button button-dark" type="button">Run AI Analysis</button>
+        </div>
+      </section>
+
+      <section class="dashboard-grid analysis-layout reveal">
+        <article class="glass-panel upload-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Upload</p>
+              <h3>Resume PDF</h3>
+            </div>
+          </div>
+          <form id="resumeForm" class="app-form">
+            <label class="upload-control">
+              <span>Select PDF resume</span>
+              <input type="file" name="resume" accept="application/pdf" required />
+            </label>
+            <button class="button button-dark" type="submit">Upload resume</button>
+          </form>
+          <div id="resumeMeta" class="content-note"></div>
+        </article>
+
+        <article class="glass-panel wide-panel results-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Results</p>
+              <h3>Analysis breakdown</h3>
+            </div>
+          </div>
+          <div class="analysis-grid">
+            <div class="result-card">
+              <small>Detected skills</small>
+              <div id="detectedSkills" class="chip-list"></div>
+            </div>
+            <div class="result-card">
+              <small>Missing skills</small>
+              <div id="missingSkills" class="chip-list"></div>
+            </div>
+            <div class="result-card">
+              <small>Suggested career paths</small>
+              <div id="careerPaths" class="chip-list"></div>
+            </div>
+            <div class="result-card">
+              <small>Recommended roles</small>
+              <div id="jobRoles" class="chip-list"></div>
+            </div>
+            <div class="result-card">
+              <small>Skills to learn</small>
+              <div id="skillsToLearn" class="chip-list"></div>
+            </div>
+            <div class="result-card">
+              <small>Recommended courses</small>
+              <div id="courses" class="chip-list"></div>
+            </div>
+          </div>
+          <div id="analysisSummary" class="content-note">
+            Upload a resume and run AI analysis to populate these insights.
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <div id="toast" class="toast hidden"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CareerOS | Sign In</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="auth">
+    <div class="site-bg"></div>
+    <header class="site-header compact">
+      <a class="brand" href="/index.html">
+        <span class="brand-mark">C</span>
+        <span>CareerOS</span>
+      </a>
+      <nav class="site-nav">
+        <a href="/index.html">Home</a>
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/analysis.html">Analysis</a>
+        <a href="/chat.html">Coach</a>
+      </nav>
+    </header>
+
+    <main class="center-layout auth-layout">
+      <section class="auth-shell reveal">
+        <div class="auth-copy">
+          <p class="eyebrow">Welcome Back</p>
+          <h1>Set up your career workspace.</h1>
+          <p>
+            Register once, then move across your dashboard, analysis, and AI
+            coaching pages with the same secure session.
+          </p>
+          <div class="auth-points">
+            <span>JWT authentication</span>
+            <span>Resume upload support</span>
+            <span>AI provider flexibility</span>
+          </div>
+          <div class="auth-note">
+            Use the same account across dashboard, analysis, and coach pages.
+            Your career context stays synced after sign in.
+          </div>
+        </div>
+
+        <div class="glass-panel auth-card">
+          <div class="segmented-control">
+            <button class="segment active" data-tab="register" type="button">Register</button>
+            <button class="segment" data-tab="login" type="button">Login</button>
+          </div>
+
+          <form id="registerForm" class="app-form">
+            <label>
+              Full name
+              <input type="text" name="name" placeholder="Ava Thompson" required />
+            </label>
+            <label>
+              Email address
+              <input type="email" name="email" placeholder="ava@example.com" required />
+            </label>
+            <label>
+              Password
+              <input type="password" name="password" placeholder="At least 6 characters" required />
+            </label>
+            <button class="button button-dark" type="submit">Create account</button>
+          </form>
+
+          <form id="loginForm" class="app-form hidden">
+            <label>
+              Email address
+              <input type="email" name="email" placeholder="ava@example.com" required />
+            </label>
+            <label>
+              Password
+              <input type="password" name="password" placeholder="Your password" required />
+            </label>
+            <button class="button button-dark" type="submit">Sign in</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast hidden"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>

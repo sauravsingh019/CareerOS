@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CareerOS | AI Coach</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="chat" data-requires-auth="true">
+    <div class="site-bg"></div>
+    <header class="site-header compact">
+      <a class="brand" href="/index.html">
+        <span class="brand-mark">C</span>
+        <span>CareerOS</span>
+      </a>
+      <nav class="site-nav">
+        <a href="/index.html">Home</a>
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/analysis.html">Analysis</a>
+        <a href="/chat.html" class="active">Coach</a>
+      </nav>
+      <div class="nav-actions">
+        <span id="navUserName" class="nav-user">Guest</span>
+        <button id="logoutButton" class="button button-light" type="button">Logout</button>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <section class="page-hero reveal">
+        <div>
+          <p class="eyebrow">AI Career Coach</p>
+          <h1>Ask focused questions. Get usable guidance.</h1>
+          <p>
+            Talk through interview prep, role transitions, portfolio strategy,
+            salary framing, or what to learn next.
+          </p>
+        </div>
+      </section>
+
+      <section class="coach-layout reveal">
+        <aside class="glass-panel coach-sidebar">
+          <p class="eyebrow">Suggested Prompts</p>
+          <button class="prompt-chip" type="button" data-prompt="What should I improve to become a stronger full stack engineer?">
+            Growth roadmap
+          </button>
+          <button class="prompt-chip" type="button" data-prompt="How should I prepare for a frontend system design interview?">
+            Interview prep
+          </button>
+          <button class="prompt-chip" type="button" data-prompt="Which projects should I build to stand out for product engineering roles?">
+            Portfolio ideas
+          </button>
+          <button class="prompt-chip" type="button" data-prompt="How do I position my experience for a higher-level role?">
+            Positioning advice
+          </button>
+        </aside>
+
+        <section class="glass-panel coach-panel">
+          <div class="coach-header">
+            <div>
+              <p class="eyebrow">Live Session</p>
+              <h3>Career strategy conversation</h3>
+            </div>
+            <span class="coach-status">Streaming enabled</span>
+          </div>
+          <div id="chatMessages" class="chat-stream"></div>
+          <form id="chatForm" class="chat-composer">
+            <input
+              type="text"
+              name="message"
+              placeholder="Ask your question here..."
+              required
+            />
+            <button class="button button-dark" type="submit">Send</button>
+          </form>
+        </section>
+      </section>
+    </main>
+
+    <div id="toast" class="toast hidden"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CareerOS | Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="dashboard" data-requires-auth="true">
+    <div class="site-bg"></div>
+    <header class="site-header compact">
+      <a class="brand" href="/index.html">
+        <span class="brand-mark">C</span>
+        <span>CareerOS</span>
+      </a>
+      <nav class="site-nav">
+        <a href="/index.html">Home</a>
+        <a href="/dashboard.html" class="active">Dashboard</a>
+        <a href="/analysis.html">Analysis</a>
+        <a href="/chat.html">Coach</a>
+      </nav>
+      <div class="nav-actions">
+        <span id="navUserName" class="nav-user">Guest</span>
+        <button id="logoutButton" class="button button-light" type="button">Logout</button>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <section class="page-hero reveal">
+        <div>
+          <p class="eyebrow">Dashboard</p>
+          <h1 id="welcomeHeading">Your career control center</h1>
+          <p>
+            Keep your profile current, track your latest resume, and view the
+            most recent AI recommendation snapshot.
+          </p>
+        </div>
+        <div class="page-actions">
+          <a class="button button-light" href="/analysis.html">Open Analysis</a>
+          <a class="button button-dark" href="/chat.html">Talk To Coach</a>
+        </div>
+      </section>
+
+      <section class="dashboard-grid workspace-grid reveal">
+        <article class="glass-panel status-panel summary-panel">
+          <span class="mini-tag">Profile Summary</span>
+          <h3>Workspace readiness</h3>
+          <div class="status-metrics">
+            <div>
+              <small>Skills listed</small>
+              <strong id="metricSkillsCount">0</strong>
+            </div>
+            <div>
+              <small>Resume status</small>
+              <strong id="metricResumeStatus">Pending</strong>
+            </div>
+            <div>
+              <small>AI status</small>
+              <strong id="metricAnalysisStatus">Waiting</strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="glass-panel profile-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Profile</p>
+              <h3>Professional details</h3>
+            </div>
+            <a class="text-link" href="/analysis.html">Analyze resume</a>
+          </div>
+          <form id="profileForm" class="app-form">
+            <label>
+              Full name
+              <input type="text" name="name" required />
+            </label>
+            <label>
+              Skills
+              <input type="text" name="skills" placeholder="React, Node.js, MongoDB" required />
+            </label>
+            <label>
+              Education
+              <textarea name="education" rows="3" required></textarea>
+            </label>
+            <label>
+              Experience
+              <textarea name="experience" rows="4" required></textarea>
+            </label>
+            <button class="button button-dark" type="submit">Save profile</button>
+          </form>
+        </article>
+
+        <article class="glass-panel resume-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Latest Resume</p>
+              <h3>Upload status</h3>
+            </div>
+            <a class="text-link" href="/analysis.html">Upload new</a>
+          </div>
+          <div id="resumeMeta" class="content-note">
+            No resume uploaded yet. Go to the analysis page to upload your PDF.
+          </div>
+        </article>
+
+        <article class="glass-panel wide-panel insight-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Latest Insights</p>
+              <h3>AI recommendation snapshot</h3>
+            </div>
+            <a class="text-link" href="/analysis.html">Run full analysis</a>
+          </div>
+          <div class="chip-sections">
+            <div>
+              <small>Suggested roles</small>
+              <div id="jobRoles" class="chip-list"></div>
+            </div>
+            <div>
+              <small>Skills to learn</small>
+              <div id="skillsToLearn" class="chip-list"></div>
+            </div>
+            <div>
+              <small>Career paths</small>
+              <div id="careerPaths" class="chip-list"></div>
+            </div>
+          </div>
+          <div id="analysisSummary" class="content-note">
+            Run analysis to populate this dashboard snapshot.
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <div id="toast" class="toast hidden"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>
