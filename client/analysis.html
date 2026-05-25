@@ -3,108 +3,183 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CareerOS | Resume Analysis</title>
+    <title>CareerOS — Cloud Resume Analysis Center</title>
+    <meta name="description" content="Parse your PDF resume text, evaluate technical match ratios, and map custom course tracks using high-end AI models." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body data-page="analysis" data-requires-auth="true">
-    <div class="site-bg"></div>
-    <header class="site-header compact">
-      <a class="brand" href="/index.html">
+
+    <!-- MacOS Style Floating Header (No Top Contact Bar Offset!) -->
+    <header class="site-header">
+      <a class="brand" href="index.html">
         <span class="brand-mark">C</span>
-        <span>CareerOS</span>
+        CareerOS
       </a>
       <nav class="site-nav">
-        <a href="/index.html">Home</a>
-        <a href="/dashboard.html">Dashboard</a>
-        <a href="/analysis.html" class="active">Analysis</a>
-        <a href="/chat.html">Coach</a>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="analysis.html" class="active">Analysis</a>
+        <a href="chat.html">Coach</a>
       </nav>
       <div class="nav-actions">
-        <span id="navUserName" class="nav-user">Guest</span>
-        <button id="logoutButton" class="button button-light" type="button">Logout</button>
+        <span id="navUserName" class="nav-user">Guest User</span>
+        <button id="logoutButton" class="button button-ghost" type="button">Logout</button>
       </div>
     </header>
 
     <main class="app-shell">
+      <!-- Page Hero section -->
       <section class="page-hero reveal">
         <div>
-          <p class="eyebrow">Resume Analysis</p>
-          <h1>Upload once. Understand the gaps clearly.</h1>
-          <p>
-            Parse your PDF resume, extract your strongest skills, and generate a
-            role-focused recommendation set with AI.
-          </p>
+          <span class="page-eyebrow">Intelligence Core</span>
+          <h1>Resume Analysis &amp; Extraction</h1>
+          <p>Extract credentials, evaluate match indices, and locate core skill deficits.</p>
         </div>
         <div class="page-actions">
-          <button id="runAnalysisButton" class="button button-dark" type="button">Run AI Analysis</button>
+          <button id="runAnalysisButton" class="button button-dark" type="button">⚡ Run AI Analysis</button>
         </div>
       </section>
 
+      <!-- Dynamic AI Progress Loader (Toggled during parsing/prompt executions) -->
+      <div class="ai-progress-wrap" id="aiProgressWrap">
+        <div class="ai-progress-label" id="aiProgressLabel">Consulting model endpoints...</div>
+        <div class="ai-progress-bar">
+          <div class="ai-progress-fill" id="aiProgressFill"></div>
+        </div>
+      </div>
+
+      <!-- Analysis dashboard panel grid -->
       <section class="dashboard-grid analysis-layout reveal">
+
+        <!-- Left Bento Card: Document Upload Zone -->
         <article class="glass-panel upload-panel">
           <div class="panel-heading">
             <div>
-              <p class="eyebrow">Upload</p>
-              <h3>Resume PDF</h3>
+              <span class="panel-eyebrow">Vault Document</span>
+              <h3>Upload Resume</h3>
             </div>
           </div>
+          
           <form id="resumeForm" class="app-form">
-            <label class="upload-control">
-              <span>Select PDF resume</span>
-              <input type="file" name="resume" accept="application/pdf" required />
+            <label>
+              Select Resume File
+              <div class="upload-control" id="uploadDropZone" role="button" tabindex="0" aria-label="Drop PDF file here to upload">
+                <div class="upload-control-icon">📎</div>
+                <div class="upload-control-text">Click to browse or drop file</div>
+                <div class="upload-control-sub">PDF formats only · Max 10MB</div>
+                <input type="file" name="resume" accept="application/pdf" required id="resumeFileInput" />
+              </div>
+              
+              <div class="upload-file-chosen hidden" id="fileChosenBadge">
+                <span>✓</span>
+                <span id="fileChosenName">resume.pdf</span>
+              </div>
             </label>
-            <button class="button button-dark" type="submit">Upload resume</button>
+            
+            <button class="button button-dark" type="submit" id="uploadResumeBtn" style="width: 100%; margin-top: 12px; padding: 12px;">Upload PDF Document</button>
           </form>
-          <div id="resumeMeta" class="content-note"></div>
+
+          <div id="resumeMeta" class="content-note" style="margin-top: 24px; font-weight: 500;">
+            Vault upload status is clean. No document uploaded yet.
+          </div>
         </article>
 
-        <article class="glass-panel wide-panel results-panel">
+        <!-- Right Bento Card: Broad extracted strategy outputs -->
+        <article class="glass-panel results-panel">
           <div class="panel-heading">
             <div>
-              <p class="eyebrow">Results</p>
-              <h3>Analysis breakdown</h3>
+              <span class="panel-eyebrow">Strategic Vectors</span>
+              <h3>Extracted Career Strategy</h3>
+            </div>
+            <div id="providerBadgeWrap" class="hidden">
+              <span class="provider-badge" id="providerBadge">🤖 AI Engine Active</span>
             </div>
           </div>
-          <div class="analysis-grid">
-            <div class="result-card">
-              <small>Detected skills</small>
+
+          <!-- Glass Results Bento Layout -->
+          <div class="analysis-grid" id="analysisGrid">
+            
+            <div class="result-card" id="cardDetected">
+              <small>Detected Strengths</small>
               <div id="detectedSkills" class="chip-list"></div>
             </div>
-            <div class="result-card">
-              <small>Missing skills</small>
+            
+            <div class="result-card" id="cardMissing">
+              <small>Skill Deficits / Gaps</small>
               <div id="missingSkills" class="chip-list"></div>
             </div>
-            <div class="result-card">
-              <small>Suggested career paths</small>
+            
+            <div class="result-card" id="cardPaths">
+              <small>Suggested Cloud Architectures</small>
               <div id="careerPaths" class="chip-list"></div>
             </div>
-            <div class="result-card">
-              <small>Recommended roles</small>
+            
+            <div class="result-card" id="cardRoles">
+              <small>Target Enterprise Roles</small>
               <div id="jobRoles" class="chip-list"></div>
             </div>
-            <div class="result-card">
-              <small>Skills to learn</small>
+            
+            <div class="result-card" id="cardLearn">
+              <small>Skills to Master</small>
               <div id="skillsToLearn" class="chip-list"></div>
             </div>
-            <div class="result-card">
-              <small>Recommended courses</small>
+            
+            <div class="result-card" id="cardCourses">
+              <small>Specialized Course Tracks</small>
               <div id="courses" class="chip-list"></div>
             </div>
+
           </div>
-          <div id="analysisSummary" class="content-note">
-            Upload a resume and run AI analysis to populate these insights.
+
+          <div id="analysisSummary" class="content-note" style="margin-top: 28px; line-height:1.6;">
+            Upload your professional resume PDF and click **Run AI Analysis** to start our multi-model extraction engine and discover cavities.
           </div>
         </article>
+
       </section>
     </main>
 
+    <!-- Sleek, High-End Minimalist Footer -->
+    <footer class="site-footer" style="padding: 48px 0; margin-top: 64px;">
+      <div class="footer-col-bottom" style="border-top: none; margin-top: 0; padding-top: 0;">
+        <div style="display:flex; align-items:center; gap:20px;">
+          <a class="brand" href="index.html" style="color: var(--navy);">
+            <span class="brand-mark">C</span>
+            CareerOS
+          </a>
+          <span style="font-size:0.78rem; color:var(--text-muted);">|</span>
+          <span style="font-size:0.78rem; color:var(--text-secondary);">100% Free AI Career Intelligence Platform</span>
+        </div>
+        <div class="footer-soc">
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        </div>
+        <p class="footer-copy">Copyright 2026 CareerOS Technologies. All rights reserved.</p>
+      </div>
+    </footer>
+
     <div id="toast" class="toast hidden"></div>
-    <script src="/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" defer></script>
+    <script src="app.js"></script>
+    <script>
+      // Apple Spring reveal animation
+      document.addEventListener("DOMContentLoaded", () => {
+        const reveals = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("revealed");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        
+        reveals.forEach((el) => observer.observe(el));
+      });
+    </script>
   </body>
 </html>

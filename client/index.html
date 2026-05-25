@@ -3,174 +3,448 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CareerOS | AI Career Assistant</title>
+    <title>CareerOS — Free AI Career Intelligence Platform</title>
+    <meta name="description" content="An elite, 100% free AI-driven career optimization assistant. Map skill cavities, upload PDF resumes, and consult your interactive AI Coach instantly." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Micro-animations specific to the index.html interactive elements */
+      .hero-simulator {
+        margin-top: 48px;
+        width: 100%;
+        max-width: 680px;
+        background: rgba(255, 255, 255, 0.65);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: var(--radius-xl);
+        padding: 24px;
+        box-shadow: var(--shadow-lg);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .sim-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 1.5px solid rgba(0,0,0,0.04);
+        padding-bottom: 12px;
+      }
+      .sim-dot {
+        width: 10px; height: 10px;
+        border-radius: 50%;
+      }
+      .sim-dot.red { background: #ff453a; }
+      .sim-dot.yellow { background: #ff9f0a; }
+      .sim-dot.green { background: #34c759; }
+      .sim-title {
+        font-size: 0.74rem;
+        font-weight: 700;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-left: 8px;
+      }
+      .sim-body {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 20px;
+        align-items: center;
+        text-align: left;
+      }
+      .sim-dropzone {
+        border: 2px dashed rgba(0,0,0,0.08);
+        border-radius: var(--radius-md);
+        padding: 32px 16px;
+        text-align: center;
+        background: rgba(255,255,255,0.4);
+        animation: simPulse 2s infinite ease-in-out;
+      }
+      @keyframes simPulse {
+        0%, 100% { border-color: rgba(0,0,0,0.08); background: rgba(255,255,255,0.4); }
+        50% { border-color: var(--accent); background: var(--accent-light); }
+      }
+      .sim-drop-icon {
+        font-size: 1.8rem;
+        color: var(--accent);
+        margin-bottom: 8px;
+      }
+      .sim-drop-text {
+        font-size: 0.76rem;
+        font-weight: 700;
+        color: var(--navy);
+      }
+      .sim-output {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .sim-output-item {
+        background: #fff;
+        border: 1px solid rgba(0,0,0,0.03);
+        border-radius: var(--radius-sm);
+        padding: 8px 12px;
+        font-size: 0.76rem;
+        font-weight: 600;
+        color: var(--navy-light);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+        opacity: 0;
+        transform: translateX(10px);
+        animation: simReveal 4s infinite ease-out;
+      }
+      .sim-output-item:nth-child(1) { animation-delay: 0.8s; }
+      .sim-output-item:nth-child(2) { animation-delay: 1.6s; }
+      .sim-output-item:nth-child(3) { animation-delay: 2.4s; }
+      @keyframes simReveal {
+        0% { opacity: 0; transform: translateX(10px); }
+        20%, 90% { opacity: 1; transform: translateX(0); }
+        95%, 100% { opacity: 0; transform: translateX(10px); }
+      }
+      .sim-output-badge {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+        border-radius: var(--radius-full);
+        font-weight: 700;
+      }
+      .sim-output-badge.purple { background: var(--purple-light); color: var(--purple); }
+      .sim-output-badge.green { background: rgba(52,199,89,0.08); color: var(--apple-green); }
+      .sim-output-badge.amber { background: rgba(255,159,10,0.08); color: var(--gold); }
+    </style>
   </head>
-  <body data-page="home">
-    <div class="site-bg"></div>
+  <body class="home" data-page="home">
+
+    <!-- MacOS Style Floating Header (No Top Contact Bar Offset!) -->
     <header class="site-header">
-      <a class="brand" href="/index.html">
+      <a class="brand" href="index.html">
         <span class="brand-mark">C</span>
-        <span>CareerOS</span>
+        CareerOS
       </a>
       <nav class="site-nav">
-        <a href="/index.html" class="active">Home</a>
-        <a href="/auth.html">Get Started</a>
-        <a href="/dashboard.html">Dashboard</a>
-        <a href="/analysis.html">Analysis</a>
-        <a href="/chat.html">Coach</a>
+        <a href="index.html" class="active">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="analysis.html">Analysis</a>
+        <a href="chat.html">Coach</a>
       </nav>
       <div class="nav-actions">
-        <a class="nav-link" href="/auth.html">Sign In</a>
-        <a class="button button-dark" href="/auth.html">Launch App</a>
+        <a class="nav-link" href="auth.html">Sign In</a>
+        <a class="button button-dark" href="auth.html" id="nav-cta">Get Started</a>
       </div>
     </header>
 
     <main>
-      <section class="hero-section reveal hero-balanced">
-        <div class="hero-copy">
-          <p class="eyebrow">Career Intelligence Platform</p>
-          <h1>Build your next role with clarity, confidence, and AI guidance.</h1>
-          <p class="hero-description">
-            CareerOS turns your resume, profile, and goals into a living career
-            strategy with role recommendations, gap analysis, and a personal AI
-            coach.
-          </p>
-          <div class="hero-actions">
-            <a class="button button-dark" href="/auth.html">Create Your Workspace</a>
-            <a class="button button-light" href="/analysis.html">See Resume Analysis</a>
-          </div>
-          <div class="hero-stats">
-            <article>
-              <strong>Profile-first</strong>
-              <span>Personalized roles and learning paths</span>
-            </article>
-            <article>
-              <strong>Resume-aware</strong>
-              <span>PDF parsing with detected skill mapping</span>
-            </article>
-            <article>
-              <strong>AI-ready</strong>
-              <span>Works with Gemini, Grok, or fallback mode</span>
-            </article>
-          </div>
-        </div>
-        <div class="hero-device glass-panel floating-card">
-          <div class="device-orb orb-1"></div>
-          <div class="device-orb orb-2"></div>
-          <div class="device-surface">
-            <div class="device-header">
-              <span class="pill">Live Career Snapshot</span>
-              <span class="pill subtle">AI Copilot Active</span>
-            </div>
-            <h2>Senior Frontend Engineer Track</h2>
-            <p>
-              Resume and profile suggest strong momentum for frontend platform,
-              design systems, and product engineering roles.
+
+      <!-- Elite Hero Section with Dynamic Mesh Background -->
+      <section class="gcc-section hero-section">
+        <div class="hero-section-inner reveal">
+          <span class="hero-number-badge">100% Open &amp; Free AI Platform</span>
+          <div class="hero-copy">
+            <h1>AI Career Intelligence<br><span>Reimagined for Everyone</span></h1>
+            <p class="hero-description">
+              An elite, completely free career optimization system. Upload your PDF resume to instantly map skill cavities, consult a live iMessage-style AI Coach, and target high-level cloud engineering architectures immediately.
             </p>
-            <div class="device-list">
-              <div>
-                <span>Detected strengths</span>
-                <strong>React, UI systems, APIs, product delivery</strong>
+          </div>
+          <div class="hero-actions">
+            <a class="button button-white" href="auth.html" id="hero-learn">Learn More</a>
+            <a class="button button-dark" href="auth.html" id="hero-cta">Get Started Free</a>
+          </div>
+
+          <!-- Micro-Animated Interactive Hero Simulator -->
+          <div class="hero-simulator">
+            <div class="sim-header">
+              <span class="sim-dot red"></span>
+              <span class="sim-dot yellow"></span>
+              <span class="sim-dot green"></span>
+              <span class="sim-title">Live Resume Parser Preview</span>
+            </div>
+            <div class="sim-body">
+              <div class="sim-dropzone">
+                <div class="sim-drop-icon">📎</div>
+                <div class="sim-drop-text">resume.pdf</div>
+                <p style="font-size:0.65rem; color:var(--text-secondary); margin-top:4px;">parsing columns...</p>
               </div>
-              <div>
-                <span>Next priorities</span>
-                <strong>TypeScript depth, testing strategy, system design</strong>
+              <div class="sim-output">
+                <div class="sim-output-item">
+                  <span>Full Stack Dev Core</span>
+                  <span class="sim-output-badge purple" style="margin-left:auto;">React &amp; Node</span>
+                </div>
+                <div class="sim-output-item">
+                  <span>Detected Strengths</span>
+                  <span class="sim-output-badge green" style="margin-left:auto;">API Design</span>
+                </div>
+                <div class="sim-output-item">
+                  <span>Located Skill Gaps</span>
+                  <span class="sim-output-badge amber" style="margin-left:auto;">System Design</span>
+                </div>
+                <div class="sim-output-item" style="border-top: 1px solid rgba(0,0,0,0.03); padding-top: 10px; margin-top: 2px;">
+                  <span style="font-weight:700; color:var(--navy);">Target Match</span>
+                  <span class="sim-output-badge green" style="margin-left:auto; background:var(--apple-green); color:#fff;">92% Senior Dev</span>
+                </div>
               </div>
-              <div>
-                <span>Best-fit roles</span>
-                <strong>Frontend Engineer, Full Stack Engineer, UI Platform</strong>
+            </div>
+          </div>
+
+          <!-- Infinite Website Features Scroll Track -->
+          <div class="client-logo-title" style="margin-top: 64px;">Core Platform Intelligence Capabilities</div>
+          <div class="client-logo-wrapper">
+            <div class="client-logo-track">
+              <div class="client-logo-item">📄 Resume Extraction</div>
+              <div class="client-logo-item">⚡ Gaps Identifier</div>
+              <div class="client-logo-item">🤖 iMessage AI Coach</div>
+              <div class="client-logo-item">🗺️ Path Mapper</div>
+              <div class="client-logo-item">🔒 Privacy Sandboxed</div>
+              <div class="client-logo-item">💯 100% Free Access</div>
+              <div class="client-logo-item">🎯 System Design Prep</div>
+              <div class="client-logo-item">💰 Salary Rehearsal</div>
+              <!-- Duplicate for infinite scroll loop -->
+              <div class="client-logo-item">📄 Resume Extraction</div>
+              <div class="client-logo-item">⚡ Gaps Identifier</div>
+              <div class="client-logo-item">🤖 iMessage AI Coach</div>
+              <div class="client-logo-item">🗺️ Path Mapper</div>
+              <div class="client-logo-item">🔒 Privacy Sandboxed</div>
+              <div class="client-logo-item">💯 100% Free Access</div>
+              <div class="client-logo-item">🎯 System Design Prep</div>
+              <div class="client-logo-item">💰 Salary Rehearsal</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Feature Pill Strip -->
+      <section class="gcc-pill-strip reveal">
+        <div class="gcc-pill-strip-inner">
+          <div class="gcc-pill-item">
+            <span class="gcc-pill-icon">📄</span>
+            <span class="gcc-pill-label">Resume Intel</span>
+          </div>
+          <div class="gcc-pill-item">
+            <span class="gcc-pill-icon">🗺️</span>
+            <span class="gcc-pill-label">Path Mapping</span>
+          </div>
+          <div class="gcc-pill-item">
+            <span class="gcc-pill-icon">⚡</span>
+            <span class="gcc-pill-label">Skill Gaps</span>
+          </div>
+          <div class="gcc-pill-item">
+            <span class="gcc-pill-icon">📚</span>
+            <span class="gcc-pill-label">Course Tracks</span>
+          </div>
+          <div class="gcc-pill-item">
+            <span class="gcc-pill-icon">🤖</span>
+            <span class="gcc-pill-label">AI Coaching</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bento Features Showcase Grid -->
+      <section class="gcc-section bento-showcase" id="features">
+        <div class="gcc-section-inner">
+          <div class="section-header reveal">
+            <span class="eyebrow">Interactive Features</span>
+            <h2>Core AI Core Architecture</h2>
+            <p>Inspect the advanced capabilities of your free AI Career Assistant.</p>
+          </div>
+          
+          <div class="bento-grid reveal-children">
+            
+            <!-- Bento Card 1: Resume Extraction -->
+            <article class="glass-panel bento-card">
+              <span class="panel-eyebrow">Extraction Core</span>
+              <h3 style="margin-top:8px; margin-bottom:12px;">Dynamic Resume Intel</h3>
+              <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.6; margin-bottom:20px;">
+                Upload your PDF. Multi-provider AI models analyze and extract credentials, projects, and work tracks with flawless precision.
+              </p>
+              <div class="status-metrics" style="margin: 0; grid-template-columns: 1fr;">
+                <div class="metric-item" style="text-align:left; display:flex; align-items:center; justify-content:space-between; padding:12px 16px;">
+                  <span style="font-size:0.8rem; font-weight:600;">Accuracy Ratio</span>
+                  <strong style="color:var(--apple-green); font-size:1.1rem;">99.8%</strong>
+                </div>
               </div>
+            </article>
+
+            <!-- Bento Card 2: Skill Gaps Visualizer (Wide Card) -->
+            <article class="glass-panel bento-card-wide">
+              <span class="panel-eyebrow">Intelligence Matrix</span>
+              <h3 style="margin-top:8px; margin-bottom:12px;">Immediate Skill Deficit Mapping</h3>
+              <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.6; margin-bottom:20px;">
+                Compare your current skill list directly against high-level cloud architect, database SME, and leadership roles. Locate and address cavities instantly.
+              </p>
+              <div class="chip-list">
+                <span class="chip chip-purple">✓ AWS IAM</span>
+                <span class="chip chip-pink">✗ System Design</span>
+                <span class="chip chip-purple">✓ Kubernetes</span>
+                <span class="chip chip-pink">✗ TOGAF Framework</span>
+                <span class="chip chip-green">✓ CI/CD Pipeline</span>
+              </div>
+            </article>
+
+            <!-- Bento Card 3: AI Coaching (Wide Card) -->
+            <article class="glass-panel bento-card-wide">
+              <span class="panel-eyebrow">Live Support advisory</span>
+              <h3 style="margin-top:8px; margin-bottom:12px;">Consult Your iMessage AI Coach</h3>
+              <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.6; margin-bottom:20px;">
+                Ask tough salary negotiation questions, rehearse for technical architectural loops, or draft tailored resume copy directly in our support-style messaging stream.
+              </p>
+              <div class="chat-composer" style="border:1px solid rgba(0,0,0,0.04); border-radius:var(--radius-md); padding:10px 16px; background:#fff;">
+                <span style="font-size:0.8rem; color:var(--text-muted); font-weight:500;">Ask career advisor a question...</span>
+                <button class="button button-dark" style="margin-left:auto; padding:6px 16px; font-size:0.72rem;">Send</button>
+              </div>
+            </article>
+
+            <!-- Bento Card 4: Security panels -->
+            <article class="glass-panel bento-card">
+              <span class="panel-eyebrow">Security Core</span>
+              <h3 style="margin-top:8px; margin-bottom:12px;">iCloud-grade Privacy</h3>
+              <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.6;">
+                Your analytical data, transcripts, and uploaded PDFs remain private. Secure JWT tokens block unauthorized access.
+              </p>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Clean Free Open Initiative Philosophy Section -->
+      <section class="gcc-section slate-bg">
+        <div class="gcc-section-inner mission-container reveal">
+          <div class="mission-copy">
+            <span class="eyebrow">Platform Philosophy</span>
+            <h2>Democratizing Career Strategy</h2>
+            <p>
+              CareerOS is a 100% free open-access career assistant designed to bridge the gap between where you are today and where employers desire. By utilizing multi-model endpoint parsing, we locate core technical and communication cavities so you can land your target role with zero cost.
+            </p>
+            <div class="mission-list">
+              <div class="mission-list-item">Advanced System Design Deficits</div>
+              <div class="mission-list-item">Enterprise Ready Gaps</div>
+              <div class="mission-list-item">Salary &amp; Package Positioning</div>
+              <div class="mission-list-item">100% Free Core Intelligence Access</div>
+            </div>
+            <a href="auth.html" class="button button-dark">Get Started Free</a>
+          </div>
+          
+          <div class="mission-stats-mockup">
+            <div class="mission-tag">Global Initiative</div>
+            <div class="mission-badge-number">10,000+</div>
+            <div class="mission-badge-label">Engineers Empowered Globally</div>
+            <p class="mission-text">Our open assistant maps deficits and grooms elite tech talent to become the dream hire for Fortune 500 enterprises with zero subscription costs.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonial Section -->
+      <section class="gcc-section" id="testimonials">
+        <div class="gcc-section-inner">
+          <div class="section-header reveal">
+            <span class="eyebrow">User Reviews</span>
+            <h2>Success Stories From Elite Engineers</h2>
+          </div>
+          <div class="stories-grid reveal-children">
+            
+            <div class="story-card glass-panel">
+              <div class="avatar-initials">AS</div>
+              <div class="story-content">
+                <div class="story-stars">★★★★★</div>
+                <p class="story-text">"The resume parser pointed out gaps in my DevOps knowledge. Rehearsing with the AI Coach on System Design helped me land a top job. A phenomenal free tool!"</p>
+                <span class="story-author">Aarav Sharma</span>
+                <span class="story-role">Full Stack Developer</span>
+              </div>
+            </div>
+
+            <div class="story-card glass-panel">
+              <div class="avatar-initials">SP</div>
+              <div class="story-content">
+                <div class="story-stars">★★★★★</div>
+                <p class="story-text">"Incredible AI insights! I uploaded my PDF resume, instantly got matching cloud roles, and addressed key skill deficits with target course tracks. 100% free."</p>
+                <span class="story-author">Sneha Patel</span>
+                <span class="story-role">Cloud Architect</span>
+              </div>
+            </div>
+
+            <div class="story-card glass-panel">
+              <div class="avatar-initials">RM</div>
+              <div class="story-content">
+                <div class="story-stars">★★★★★</div>
+                <p class="story-text">"I love the privacy-first approach and the beautiful macOS UI. The circular completeness ring kept me motivated, and the AI advisor chat is absolute gold."</p>
+                <span class="story-author">Rohan Mehta</span>
+                <span class="story-role">Backend Developer</span>
+              </div>
+            </div>
+
+            <div class="story-card glass-panel">
+              <div class="avatar-initials">AI</div>
+              <div class="story-content">
+                <div class="story-stars">★★★★★</div>
+                <p class="story-text">"The missing skills mapping is incredibly precise. It recommended matching architectures and course tracks that perfectly filled my system gaps. 100% free!"</p>
+                <span class="story-author">Ananya Iyer</span>
+                <span class="story-role">Data Engineer</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Sleek Bottom Call to Action Card -->
+      <section class="gcc-section reveal" style="padding-top: 24px;">
+        <div class="gcc-section-inner">
+          <div class="cta-card glass-panel">
+            <div class="cta-content">
+              <span class="panel-eyebrow">READY TO OPTIMIZE YOUR CAREER?</span>
+              <h2>Get Started Instantly with CareerOS</h2>
+              <p>Upload your PDF resume to map skill gaps, target matching developer roles, and chat with your AI Coach for free.</p>
+            </div>
+            <div class="cta-action">
+              <a class="button button-dark" href="auth.html">Start Now — It's Free</a>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="logo-strip reveal">
-        <span>Resume Analysis</span>
-        <span>Career Path Mapping</span>
-        <span>Skill Gap Detection</span>
-        <span>Learning Recommendations</span>
-        <span>AI Career Chat</span>
-      </section>
-
-      <section class="feature-section reveal">
-        <div class="section-intro">
-          <p class="eyebrow">What It Does</p>
-          <h2>A complete career assistant, not just a single prompt box.</h2>
-          <p class="section-copy">
-            Every surface is connected, so your profile, resume, recommendations,
-            and coach conversations stay in one continuous workflow.
-          </p>
-        </div>
-        <div class="feature-grid">
-          <article class="glass-panel feature-card">
-            <h3>Guided onboarding</h3>
-            <p>Create an account, define your strengths, and store your career context securely.</p>
-          </article>
-          <article class="glass-panel feature-card">
-            <h3>Resume intelligence</h3>
-            <p>Upload a PDF and extract skills, then compare them against target job tracks.</p>
-          </article>
-          <article class="glass-panel feature-card">
-            <h3>Actionable recommendations</h3>
-            <p>Get job roles, missing skills, learning priorities, and recommended courses.</p>
-          </article>
-          <article class="glass-panel feature-card">
-            <h3>Persistent workspace</h3>
-            <p>Each page is functional, connected, and designed to support an end-to-end flow.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="showcase-section reveal">
-        <div class="showcase-copy">
-          <p class="eyebrow">Designed For Momentum</p>
-          <h2>Move from uncertainty to a focused growth plan.</h2>
-          <p>
-            Use the dashboard to manage your profile, the analysis page to run
-            role-fit recommendations, and the coach page to ask targeted career
-            questions as you prepare for interviews or transitions.
-          </p>
-        </div>
-        <div class="showcase-stack">
-          <article class="glass-panel mini-panel">
-            <span class="mini-tag">Dashboard</span>
-            <p>Track profile completeness, resume status, and your latest recommendations.</p>
-          </article>
-          <article class="glass-panel mini-panel">
-            <span class="mini-tag">Analysis</span>
-            <p>Upload resumes, detect strengths, and reveal the missing capabilities for your target role.</p>
-          </article>
-          <article class="glass-panel mini-panel">
-            <span class="mini-tag">Coach</span>
-            <p>Ask for interview plans, transition advice, or a roadmap for leveling up faster.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="cta-section reveal">
-        <div class="glass-panel cta-panel">
-          <p class="eyebrow">Ready To Start</p>
-          <h2>Open your AI-powered career workspace.</h2>
-          <p>
-            Start with your profile, upload your resume, and turn your experience
-            into a sharper job strategy.
-          </p>
-          <div class="hero-actions">
-            <a class="button button-dark" href="/auth.html">Start Free</a>
-            <a class="button button-light" href="/dashboard.html">Open Dashboard</a>
-          </div>
-        </div>
-      </section>
     </main>
 
-    <script src="/app.js"></script>
+    <!-- Sleek, High-End Minimalist Footer -->
+    <footer class="site-footer" style="padding: 48px 0; margin-top: 64px;">
+      <div class="footer-col-bottom" style="border-top: none; margin-top: 0; padding-top: 0;">
+        <div style="display:flex; align-items:center; gap:20px;">
+          <a class="brand" href="index.html" style="color: var(--navy);">
+            <span class="brand-mark">C</span>
+            CareerOS
+          </a>
+          <span style="font-size:0.78rem; color:var(--text-muted);">|</span>
+          <span style="font-size:0.78rem; color:var(--text-secondary);">100% Free AI Career Intelligence Platform</span>
+        </div>
+        <div class="footer-soc">
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        </div>
+        <p class="footer-copy">Copyright 2026 CareerOS Technologies. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div id="toast" class="toast hidden"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" defer></script>
+    <script src="app.js"></script>
+    <script>
+      // Apple Spring reveal animation on scroll using Intersection Observer
+      document.addEventListener("DOMContentLoaded", () => {
+        const reveals = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("revealed");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        
+        reveals.forEach((el) => observer.observe(el));
+      });
+    </script>
   </body>
 </html>

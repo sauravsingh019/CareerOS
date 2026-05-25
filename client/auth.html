@@ -3,88 +3,148 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CareerOS | Sign In</title>
+    <title>CareerOS — Secure Cloud Workspace Gateway</title>
+    <meta name="description" content="Securely access your CareerOS workspace to map skill cavities, upload PDF resumes, and consult your interactive AI Coach." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body data-page="auth">
-    <div class="site-bg"></div>
-    <header class="site-header compact">
-      <a class="brand" href="/index.html">
+
+    <!-- MacOS Style Floating Header (No Top Contact Bar Offset!) -->
+    <header class="site-header">
+      <a class="brand" href="index.html">
         <span class="brand-mark">C</span>
-        <span>CareerOS</span>
+        CareerOS
       </a>
       <nav class="site-nav">
-        <a href="/index.html">Home</a>
-        <a href="/dashboard.html">Dashboard</a>
-        <a href="/analysis.html">Analysis</a>
-        <a href="/chat.html">Coach</a>
+        <a href="index.html">Home</a>
       </nav>
+      <div class="nav-actions">
+        <a class="button button-ghost" href="index.html">← Back to Site</a>
+      </div>
     </header>
 
-    <main class="center-layout auth-layout">
+    <main class="center-layout">
       <section class="auth-shell reveal">
+
+        <!-- Left Copy: Premium Strategic Pillars -->
         <div class="auth-copy">
-          <p class="eyebrow">Welcome Back</p>
-          <h1>Set up your career workspace.</h1>
-          <p>
-            Register once, then move across your dashboard, analysis, and AI
-            coaching pages with the same secure session.
+          <span class="page-eyebrow">Secure Workspace Gateway</span>
+          <h1 style="margin-top: 8px;">One Account.<br>Your Entire Workspace.</h1>
+          <p style="margin-top: 12px; line-height: 1.6; color: var(--text-secondary);">
+            Synchronize your credentials, PDF uploads, skill deficit mapping logs, and AI strategic conversations in one encrypted session.
           </p>
-          <div class="auth-points">
-            <span>JWT authentication</span>
-            <span>Resume upload support</span>
-            <span>AI provider flexibility</span>
-          </div>
-          <div class="auth-note">
-            Use the same account across dashboard, analysis, and coach pages.
-            Your career context stays synced after sign in.
+          <div class="auth-points" style="margin-top: 32px;">
+            <div class="auth-point">
+              <span class="auth-point-icon">✓</span>
+              <span>Encrypted JWT token credential authentication</span>
+            </div>
+            <div class="auth-point">
+              <span class="auth-point-icon">✓</span>
+              <span>Automatic backend mapping of resume uploads</span>
+            </div>
+            <div class="auth-point">
+              <span class="auth-point-icon">✓</span>
+              <span>Strict user data sandboxing and privacy controls</span>
+            </div>
           </div>
         </div>
 
-        <div class="glass-panel auth-card">
+        <!-- Right Card: Floating Glass iCloud Panel -->
+        <div class="auth-card">
           <div class="segmented-control">
-            <button class="segment active" data-tab="register" type="button">Register</button>
-            <button class="segment" data-tab="login" type="button">Login</button>
+            <button class="segment active" data-tab="register" type="button" id="tab-register">Register</button>
+            <button class="segment" data-tab="login" type="button" id="tab-login">Sign In</button>
           </div>
 
-          <form id="registerForm" class="app-form">
-            <label>
-              Full name
-              <input type="text" name="name" placeholder="Ava Thompson" required />
+          <!-- Register Form -->
+          <form id="registerForm" class="app-form" novalidate>
+            <label for="reg-name">
+              Full Name
+              <input id="reg-name" type="text" name="name" placeholder="Ava Thompson" required autocomplete="name" />
             </label>
-            <label>
-              Email address
-              <input type="email" name="email" placeholder="ava@example.com" required />
+            
+            <label for="reg-email">
+              Email Address
+              <input id="reg-email" type="email" name="email" placeholder="ava@example.com" required autocomplete="email" />
             </label>
-            <label>
+            
+            <label for="reg-password">
               Password
-              <input type="password" name="password" placeholder="At least 6 characters" required />
+              <div class="input-wrapper has-eye">
+                <input id="reg-password" type="password" name="password" placeholder="Minimum 6 characters" required autocomplete="new-password" />
+                <button type="button" class="input-eye-toggle" data-target="reg-password" aria-label="Toggle password visibility">👁</button>
+              </div>
+              <div class="password-strength">
+                <div class="password-strength-bar" id="strengthBar"></div>
+              </div>
             </label>
-            <button class="button button-dark" type="submit">Create account</button>
+            
+            <button class="button button-dark" type="submit" id="registerBtn" style="width: 100%; margin-top: 12px; padding: 12px;">Create Free Account</button>
           </form>
 
-          <form id="loginForm" class="app-form hidden">
-            <label>
-              Email address
-              <input type="email" name="email" placeholder="ava@example.com" required />
+          <!-- Sign In Form -->
+          <form id="loginForm" class="app-form hidden" novalidate>
+            <label for="login-email">
+              Email Address
+              <input id="login-email" type="email" name="email" placeholder="ava@example.com" required autocomplete="email" />
             </label>
-            <label>
+            
+            <label for="login-password">
               Password
-              <input type="password" name="password" placeholder="Your password" required />
+              <div class="input-wrapper has-eye">
+                <input id="login-password" type="password" name="password" placeholder="Account password" required autocomplete="current-password" />
+                <button type="button" class="input-eye-toggle" data-target="login-password" aria-label="Toggle password visibility">👁</button>
+              </div>
             </label>
-            <button class="button button-dark" type="submit">Sign in</button>
+            
+            <button class="button button-dark" type="submit" id="loginBtn" style="width: 100%; margin-top: 12px; padding: 12px;">Sign In to Workspace</button>
           </form>
         </div>
+
       </section>
     </main>
 
+    <!-- Sleek, High-End Minimalist Footer -->
+    <footer class="site-footer" style="padding: 48px 0; margin-top: 64px;">
+      <div class="footer-col-bottom" style="border-top: none; margin-top: 0; padding-top: 0;">
+        <div style="display:flex; align-items:center; gap:20px;">
+          <a class="brand" href="index.html" style="color: var(--navy);">
+            <span class="brand-mark">C</span>
+            CareerOS
+          </a>
+          <span style="font-size:0.78rem; color:var(--text-muted);">|</span>
+          <span style="font-size:0.78rem; color:var(--text-secondary);">100% Free AI Career Intelligence Platform</span>
+        </div>
+        <div class="footer-soc">
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        </div>
+        <p class="footer-copy">Copyright 2026 CareerOS Technologies. All rights reserved.</p>
+      </div>
+    </footer>
+
     <div id="toast" class="toast hidden"></div>
-    <script src="/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" defer></script>
+    <script src="app.js"></script>
+    <script>
+      // Apple Spring reveal animation
+      document.addEventListener("DOMContentLoaded", () => {
+        const reveals = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("revealed");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        
+        reveals.forEach((el) => observer.observe(el));
+      });
+    </script>
   </body>
 </html>

@@ -3,86 +3,150 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CareerOS | AI Coach</title>
+    <title>CareerOS — Interactive AI Strategy Room</title>
+    <meta name="description" content="Consult your interactive AI career coach in a secure macOS-style support channel. Draft resume cover letters and map interview schedules." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body data-page="chat" data-requires-auth="true">
-    <div class="site-bg"></div>
-    <header class="site-header compact">
-      <a class="brand" href="/index.html">
+
+    <!-- MacOS Style Floating Header (No Top Contact Bar Offset!) -->
+    <header class="site-header">
+      <a class="brand" href="index.html">
         <span class="brand-mark">C</span>
-        <span>CareerOS</span>
+        CareerOS
       </a>
       <nav class="site-nav">
-        <a href="/index.html">Home</a>
-        <a href="/dashboard.html">Dashboard</a>
-        <a href="/analysis.html">Analysis</a>
-        <a href="/chat.html" class="active">Coach</a>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="analysis.html">Analysis</a>
+        <a href="chat.html" class="active">Coach</a>
       </nav>
       <div class="nav-actions">
-        <span id="navUserName" class="nav-user">Guest</span>
-        <button id="logoutButton" class="button button-light" type="button">Logout</button>
+        <span id="navUserName" class="nav-user">Guest User</span>
+        <button id="logoutButton" class="button button-ghost" type="button">Logout</button>
       </div>
     </header>
 
     <main class="app-shell">
+      <!-- Page Hero section -->
       <section class="page-hero reveal">
         <div>
-          <p class="eyebrow">AI Career Coach</p>
-          <h1>Ask focused questions. Get usable guidance.</h1>
-          <p>
-            Talk through interview prep, role transitions, portfolio strategy,
-            salary framing, or what to learn next.
-          </p>
+          <span class="page-eyebrow">Interactive Advisory</span>
+          <h1>Consult Your AI Coach</h1>
+          <p>Prepare for system design interviews, optimize salary packages, or build enterprise architectures.</p>
         </div>
       </section>
 
+      <!-- Organic macOS Messages Layout -->
       <section class="coach-layout reveal">
+        
+        <!-- Left Sidebar: iOS prompt chips -->
         <aside class="glass-panel coach-sidebar">
-          <p class="eyebrow">Suggested Prompts</p>
-          <button class="prompt-chip" type="button" data-prompt="What should I improve to become a stronger full stack engineer?">
-            Growth roadmap
+          <p class="coach-sidebar-title">Suggested Prompts</p>
+
+          <button class="prompt-chip" type="button" data-prompt="What should I improve to become a stronger full stack engineer?" id="prompt-chip-1">
+            📈 Growth Roadmap
           </button>
-          <button class="prompt-chip" type="button" data-prompt="How should I prepare for a frontend system design interview?">
-            Interview prep
+          
+          <button class="prompt-chip" type="button" data-prompt="How should I prepare for a frontend system design interview?" id="prompt-chip-2">
+            🏗️ Interview Prep
           </button>
-          <button class="prompt-chip" type="button" data-prompt="Which projects should I build to stand out for product engineering roles?">
-            Portfolio ideas
+          
+          <button class="prompt-chip" type="button" data-prompt="Which projects should I build to stand out for product engineering roles?" id="prompt-chip-3">
+            🛠️ Portfolio Upgrades
           </button>
-          <button class="prompt-chip" type="button" data-prompt="How do I position my experience for a higher-level role?">
-            Positioning advice
+          
+          <button class="prompt-chip" type="button" data-prompt="How do I position my experience for a higher-level role?" id="prompt-chip-4">
+            🎯 Experience Positioning
           </button>
+          
+          <button class="prompt-chip" type="button" data-prompt="What salary should I expect and how do I negotiate?" id="prompt-chip-5">
+            💰 Negotiation Strategy
+          </button>
+
+          <!-- sidebar Profile segment linked to profile info -->
+          <div class="coach-sidebar-profile" id="sidebarProfile" style="display: none;">
+            <div class="coach-sidebar-profile-name" id="sidebarProfileName">—</div>
+            <div class="coach-sidebar-profile-skills" id="sidebarProfileSkills">No skills listed</div>
+          </div>
         </aside>
 
+        <!-- Right Side: High-Blur iMessage Chat Stream -->
         <section class="glass-panel coach-panel">
+          
+          <!-- Chat box Header -->
           <div class="coach-header">
-            <div>
-              <p class="eyebrow">Live Session</p>
-              <h3>Career strategy conversation</h3>
+            <div class="coach-header-left">
+              <span class="panel-eyebrow">Active Strategy Thread</span>
+              <h3>Live AI Coach Support</h3>
             </div>
-            <span class="coach-status">Streaming enabled</span>
+            <div class="coach-header-right" style="display:flex; align-items:center; gap:20px;">
+              <span class="coach-status" id="coachStatus">AI Coach Online</span>
+              <button type="button" class="clear-chat-btn" id="clearChatBtn">Clear Thread</button>
+            </div>
           </div>
+
+          <!-- Messages stream dynamic loading container -->
           <div id="chatMessages" class="chat-stream"></div>
+
+          <!-- MessageComposer Form -->
           <form id="chatForm" class="chat-composer">
             <input
               type="text"
               name="message"
-              placeholder="Ask your question here..."
+              id="chatInput"
+              placeholder="Ask your AI Career Coach a question..."
               required
+              autocomplete="off"
             />
-            <button class="button button-dark" type="submit">Send</button>
+            <button class="button button-dark" type="submit" id="chatSubmitBtn">Send</button>
           </form>
+          
         </section>
       </section>
     </main>
 
+    <!-- Sleek, High-End Minimalist Footer -->
+    <footer class="site-footer" style="padding: 48px 0; margin-top: 64px;">
+      <div class="footer-col-bottom" style="border-top: none; margin-top: 0; padding-top: 0;">
+        <div style="display:flex; align-items:center; gap:20px;">
+          <a class="brand" href="index.html" style="color: var(--navy);">
+            <span class="brand-mark">C</span>
+            CareerOS
+          </a>
+          <span style="font-size:0.78rem; color:var(--text-muted);">|</span>
+          <span style="font-size:0.78rem; color:var(--text-secondary);">100% Free AI Career Intelligence Platform</span>
+        </div>
+        <div class="footer-soc">
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        </div>
+        <p class="footer-copy">Copyright 2026 CareerOS Technologies. All rights reserved.</p>
+      </div>
+    </footer>
+
     <div id="toast" class="toast hidden"></div>
-    <script src="/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" defer></script>
+    <script src="app.js"></script>
+    <script>
+      // Apple Spring reveal animation
+      document.addEventListener("DOMContentLoaded", () => {
+        const reveals = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("revealed");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        
+        reveals.forEach((el) => observer.observe(el));
+      });
+    </script>
   </body>
 </html>

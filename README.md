@@ -68,19 +68,40 @@ Copy-Item .env.example .env
   - `GROK_API_KEY`
   - `OPENAI_API_KEY`
 
-4. Start the app:
+4. Start the Application:
 
-```bash
-npm start
-```
+You have **two options** for running the application locally:
 
+### Option A: Running Separately (Recommended for local frontend tuning)
+Run the backend API server and frontend client as separate services. This allows you to edit and preview frontend client pages directly using VS Code Live Server (port 5500) or a static server.
+
+1. **Start the API Server**:
+   ```bash
+   npm run server
+   ```
+   This runs the Express API server on `http://localhost:5050` with CORS fully enabled for your dev environment.
+
+2. **Start the Client / Live Server**:
+   - Option A1: Run `npm run client` to launch a local dev server on `http://localhost:5500`.
+   - Option A2: Open the project in VS Code, right-click `client/index.html` and click **Open with Live Server** (runs on `http://localhost:5500`).
+   
+   *Note: The frontend will automatically detect it's on a client port and map all API requests back to `http://localhost:5050`!*
+
+### Option B: Single Host Mode (Production-like)
+Run the backend server and let Express serve the frontend static files on a single port.
+
+1. **Start the App**:
+   ```bash
+   npm start
+   ```
+   This starts the Express server and automatically bundles the `client/` folder static assets.
+
+2. **Open**:
+   ```text
+   http://localhost:5050
+   ```
+   
 This starts the site even if MongoDB is not available yet. In that case the frontend still loads, but database-backed features stay limited until `MONGODB_URI` is reachable.
-
-5. Open:
-
-```text
-http://localhost:5050
-```
 
 ## AI Provider Setup
 

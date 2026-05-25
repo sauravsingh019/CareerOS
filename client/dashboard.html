@@ -3,142 +3,284 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CareerOS | Dashboard</title>
+    <title>CareerOS — Cloud Intelligence Console</title>
+    <meta name="description" content="Access your modular macOS-style console to manage resume parsing metrics, skills inventory, and AI career coach insights." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Dashboard specific circular completeness indicator */
+      .circle-completeness-container {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        margin-top: 24px;
+        background: rgba(255, 255, 255, 0.4);
+        border: 1px solid rgba(0, 0, 0, 0.02);
+        border-radius: var(--radius-lg);
+        padding: 20px;
+      }
+      .circular-progress {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        display: grid;
+        place-items: center;
+      }
+      .circular-progress svg {
+        width: 80px;
+        height: 80px;
+        transform: rotate(-90deg);
+      }
+      .circular-progress circle {
+        fill: none;
+        stroke-width: 6;
+        stroke-linecap: round;
+      }
+      .circular-progress .bg-circle {
+        stroke: rgba(0, 0, 0, 0.04);
+      }
+      .circular-progress .fill-circle {
+        stroke: url(#gradientRing);
+        stroke-dasharray: 226;
+        stroke-dashoffset: 226;
+        transition: stroke-dashoffset 0.8s var(--ease-out);
+      }
+      .circular-progress-text {
+        position: absolute;
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: var(--navy);
+      }
+    </style>
   </head>
   <body data-page="dashboard" data-requires-auth="true">
-    <div class="site-bg"></div>
-    <header class="site-header compact">
-      <a class="brand" href="/index.html">
+
+    <!-- MacOS Style Floating Header (No Top Contact Bar Offset!) -->
+    <header class="site-header">
+      <a class="brand" href="index.html">
         <span class="brand-mark">C</span>
-        <span>CareerOS</span>
+        CareerOS
       </a>
       <nav class="site-nav">
-        <a href="/index.html">Home</a>
-        <a href="/dashboard.html" class="active">Dashboard</a>
-        <a href="/analysis.html">Analysis</a>
-        <a href="/chat.html">Coach</a>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="analysis.html">Analysis</a>
+        <a href="chat.html">Coach</a>
       </nav>
       <div class="nav-actions">
-        <span id="navUserName" class="nav-user">Guest</span>
-        <button id="logoutButton" class="button button-light" type="button">Logout</button>
+        <span id="navUserName" class="nav-user">Guest User</span>
+        <button id="logoutButton" class="button button-ghost" type="button">Logout</button>
       </div>
     </header>
 
     <main class="app-shell">
+      <!-- Page Hero section -->
       <section class="page-hero reveal">
         <div>
-          <p class="eyebrow">Dashboard</p>
-          <h1 id="welcomeHeading">Your career control center</h1>
-          <p>
-            Keep your profile current, track your latest resume, and view the
-            most recent AI recommendation snapshot.
-          </p>
+          <span class="page-eyebrow">Cloud Workspace Console</span>
+          <h1 id="welcomeHeading">Your Career Control Center</h1>
+          <p>Review analytical gaps, upload modern resume drafts, and target elite cloud positions.</p>
         </div>
         <div class="page-actions">
-          <a class="button button-light" href="/analysis.html">Open Analysis</a>
-          <a class="button button-dark" href="/chat.html">Talk To Coach</a>
+          <a class="button button-light" href="analysis.html" id="dash-open-analysis">Resume Analysis</a>
+          <a class="button button-dark" href="chat.html" id="dash-talk-coach">Consult AI Coach →</a>
         </div>
       </section>
 
+      <!-- Dashboard grid systems -->
       <section class="dashboard-grid workspace-grid reveal">
-        <article class="glass-panel status-panel summary-panel">
-          <span class="mini-tag">Profile Summary</span>
-          <h3>Workspace readiness</h3>
+
+        <!-- Left Bento Card: Workspace Overview Status -->
+        <article class="glass-panel summary-panel">
+          <span class="panel-eyebrow">Analytical Overview</span>
+          <h3 style="margin-top: 6px;">Workspace Status</h3>
+          
           <div class="status-metrics">
-            <div>
-              <small>Skills listed</small>
+            <div class="metric-item">
+              <small>Skills Inventory</small>
               <strong id="metricSkillsCount">0</strong>
             </div>
-            <div>
-              <small>Resume status</small>
-              <strong id="metricResumeStatus">Pending</strong>
+            <div class="metric-item">
+              <small>Resume PDF</small>
+              <strong id="metricResumeStatus" style="font-size:0.9rem;">Pending</strong>
             </div>
-            <div>
-              <small>AI status</small>
-              <strong id="metricAnalysisStatus">Waiting</strong>
+            <div class="metric-item">
+              <small>AI Analysis</small>
+              <strong id="metricAnalysisStatus" style="font-size:0.9rem;">Waiting</strong>
             </div>
           </div>
+
+          <!-- Dynamic SVG and Linear Completeness Indicators -->
+          <div class="circle-completeness-container">
+            <div class="circular-progress">
+              <svg>
+                <defs>
+                  <linearGradient id="gradientRing" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="var(--accent)" />
+                    <stop offset="100%" stop-color="var(--purple)" />
+                  </linearGradient>
+                </defs>
+                <circle class="bg-circle" cx="40" cy="40" r="36"></circle>
+                <circle class="fill-circle" cx="40" cy="40" r="36" id="completenessSvgRing"></circle>
+              </svg>
+              <div class="circular-progress-text" id="completenessPercent">0%</div>
+            </div>
+            <div class="progress-details" style="flex:1;">
+              <h4 style="font-size:0.86rem; color:var(--navy); margin-bottom:4px;">Profile Completeness</h4>
+              <p style="font-size:0.72rem; color:var(--text-secondary); line-height:1.4;">
+                Upload a resume and input professional details to lock in your 100% complete intelligence rating.
+              </p>
+              <!-- Hidden Linear fill kept for app.js sync compatibility -->
+              <div class="progress-bar-wrap" style="display:none;">
+                <div class="progress-bar">
+                  <div class="progress-bar-fill" id="completenessBarFill"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </article>
 
+        <!-- Right Bento Card: Professional Details profile Form -->
         <article class="glass-panel profile-panel">
           <div class="panel-heading">
             <div>
-              <p class="eyebrow">Profile</p>
-              <h3>Professional details</h3>
+              <span class="panel-eyebrow">Workspace Credentials</span>
+              <h3>Professional Identity</h3>
             </div>
-            <a class="text-link" href="/analysis.html">Analyze resume</a>
+            <a class="text-link" href="analysis.html">Extract from Resume →</a>
           </div>
+          
           <form id="profileForm" class="app-form">
-            <label>
-              Full name
-              <input type="text" name="name" required />
+            <label for="profileName">
+              Full Name
+              <input id="profileName" type="text" name="name" placeholder="Ava Thompson" required />
             </label>
-            <label>
-              Skills
-              <input type="text" name="skills" placeholder="React, Node.js, MongoDB" required />
+            
+            <label for="profileSkills">
+              Core Skills <span style="font-weight: 400; color: var(--text-secondary);">(comma-separated)</span>
+              <input id="profileSkills" type="text" name="skills" placeholder="E.g., React, AWS, Terraform, Docker" required />
             </label>
-            <label>
-              Education
-              <textarea name="education" rows="3" required></textarea>
+            
+            <label for="profileEducation">
+              Highest Education
+              <textarea id="profileEducation" name="education" rows="2" placeholder="E.g., B.S. in Computer Science, State University, 2024" required></textarea>
             </label>
-            <label>
-              Experience
-              <textarea name="experience" rows="4" required></textarea>
+            
+            <label for="profileExperience">
+              Professional Work Experience
+              <textarea id="profileExperience" name="experience" rows="3" placeholder="E.g., 2 years as a Cloud Operations Associate at enterprise level..." required></textarea>
             </label>
-            <button class="button button-dark" type="submit">Save profile</button>
+            
+            <button class="button button-dark" type="submit" id="saveProfileBtn">Save Identity Settings</button>
           </form>
         </article>
 
-        <article class="glass-panel resume-panel">
+        <!-- Wide Card: Document Vault Detail -->
+        <article class="glass-panel resume-panel wide-panel">
           <div class="panel-heading">
             <div>
-              <p class="eyebrow">Latest Resume</p>
-              <h3>Upload status</h3>
+              <span class="page-eyebrow">Document Vault</span>
+              <h3>Extracted Resume Context</h3>
             </div>
-            <a class="text-link" href="/analysis.html">Upload new</a>
+            <a class="text-link" href="analysis.html">Upload New PDF →</a>
           </div>
           <div id="resumeMeta" class="content-note">
-            No resume uploaded yet. Go to the analysis page to upload your PDF.
+            No resume uploaded yet. Visit the <a href="analysis.html">Analysis Page</a> to upload and extract credentials automatically.
           </div>
         </article>
 
-        <article class="glass-panel wide-panel insight-panel">
+        <!-- Wide Card: Recent AI Gaps & recommendations snapshot -->
+        <article class="glass-panel insight-panel wide-panel">
           <div class="panel-heading">
             <div>
-              <p class="eyebrow">Latest Insights</p>
-              <h3>AI recommendation snapshot</h3>
+              <span class="page-eyebrow">Workspace Intelligence</span>
+              <h3>AI Recommendations Snapshot</h3>
             </div>
-            <a class="text-link" href="/analysis.html">Run full analysis</a>
+            <a class="text-link" href="analysis.html">Refresh Analysis →</a>
           </div>
+          
           <div class="chip-sections">
             <div>
-              <small>Suggested roles</small>
+              <small>Matching Cloud Roles</small>
               <div id="jobRoles" class="chip-list"></div>
             </div>
             <div>
-              <small>Skills to learn</small>
+              <small>Skills to Learn</small>
               <div id="skillsToLearn" class="chip-list"></div>
             </div>
             <div>
-              <small>Career paths</small>
+              <small>Target Architectures</small>
               <div id="careerPaths" class="chip-list"></div>
             </div>
           </div>
+          
           <div id="analysisSummary" class="content-note">
-            Run analysis to populate this dashboard snapshot.
+            Run AI analysis on the <a href="analysis.html">Analysis Page</a> to extract modern cloud recommendations immediately.
           </div>
         </article>
+
       </section>
     </main>
 
+    <!-- Sleek, High-End Minimalist Footer -->
+    <footer class="site-footer" style="padding: 48px 0; margin-top: 64px;">
+      <div class="footer-col-bottom" style="border-top: none; margin-top: 0; padding-top: 0;">
+        <div style="display:flex; align-items:center; gap:20px;">
+          <a class="brand" href="index.html" style="color: var(--navy);">
+            <span class="brand-mark">C</span>
+            CareerOS
+          </a>
+          <span style="font-size:0.78rem; color:var(--text-muted);">|</span>
+          <span style="font-size:0.78rem; color:var(--text-secondary);">100% Free AI Career Intelligence Platform</span>
+        </div>
+        <div class="footer-soc">
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        </div>
+        <p class="footer-copy">Copyright 2026 CareerOS Technologies. All rights reserved.</p>
+      </div>
+    </footer>
+
     <div id="toast" class="toast hidden"></div>
-    <script src="/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" defer></script>
+    <script src="app.js"></script>
+    <script>
+      // Apple Spring reveal animation
+      document.addEventListener("DOMContentLoaded", () => {
+        const reveals = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("revealed");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        
+        reveals.forEach((el) => observer.observe(el));
+
+        // Circular Completeness Ring animation sync with text content
+        const ring = document.getElementById("completenessSvgRing");
+        const percentText = document.getElementById("completenessPercent");
+        if (ring && percentText) {
+          const syncRing = () => {
+            const raw = percentText.textContent.replace('%', '');
+            const pct = Math.max(0, Math.min(100, parseInt(raw) || 0));
+            // circumference of cx=40, cy=40, r=36 is 2 * pi * 36 = 226.19
+            const offset = 226 - (pct / 100) * 226;
+            ring.style.strokeDashoffset = offset;
+          };
+          
+          // Poll/observe the text changes elastically
+          syncRing();
+          const obs = new MutationObserver(syncRing);
+          obs.observe(percentText, { characterData: true, childList: true, subtree: true });
+        }
+      });
+    </script>
   </body>
 </html>
