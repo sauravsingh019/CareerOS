@@ -1,0 +1,39 @@
+{
+  "version": 2,
+  "buildCommand": "",
+  "outputDirectory": "client",
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "https://careeros-backend-e25s.onrender.com/api/$1"
+    },
+    {
+      "src": "/auth.html",
+      "dest": "/auth.html"
+    },
+    {
+      "src": "/dashboard.html",
+      "dest": "/dashboard.html"
+    },
+    {
+      "src": "/analysis.html",
+      "dest": "/analysis.html"
+    },
+    {
+      "src": "/chat.html",
+      "dest": "/chat.html"
+    },
+    {
+      "src": "/styles.css",
+      "dest": "/styles.css"
+    },
+    {
+      "src": "/app.js",
+      "dest": "/app.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}

@@ -3,5 +3,4 @@ node_modules/
 server/uploads/
 
 # Ignore deployment configs
-vercel.json
 render.yaml
