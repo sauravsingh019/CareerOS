@@ -1,5 +1,7 @@
 # CareerOS — Free AI Career Intelligence Platform
 
+🌐 Live App: https://career-os-zeta.vercel.app/
+
 CareerOS is an elite, 100% free open-access AI-driven career optimization assistant. Designed in a state-of-the-art **Obsidian Black & Platinum Silver Apple Pro Theme**, it empowers developers to instantly parse PDF resumes, map technical skill cavities, track profile completeness, and consult an interactive iMessage-style AI Strategy Coach.
 
 ---
