@@ -1,107 +1,107 @@
-# AI Career Assistant
+# CareerOS — Free AI Career Intelligence Platform
 
-A production-ready full stack web application for resume analysis, AI-powered career guidance, profile management, and career chat support.
+CareerOS is an elite, 100% free open-access AI-driven career optimization assistant. Designed in a state-of-the-art **Obsidian Black & Platinum Silver Apple Pro Theme**, it empowers developers to instantly parse PDF resumes, map technical skill cavities, track profile completeness, and consult an interactive iMessage-style AI Strategy Coach.
 
-## Tech Stack
+---
 
-- Frontend: HTML, CSS, JavaScript
-- Backend: Node.js, Express.js
-- Database: MongoDB with Mongoose
-- Auth: JWT + bcrypt
-- AI: OpenRouter, Gemini, Grok, OpenAI, or built-in fallback recommendations
+## 🎨 Premium UI & Background Features
 
-## Features
+- **Obsidian & Platinum Pro Aesthetic**: High-contrast, minimalist design utilizing deep obsidian black (`#09090b`) interactive accents over a clean, responsive layout.
+- **Cyber Squares Grid Pattern**: Symmetrical blueprint-style box grid matrix representing organized technical career structures.
+- **Twinkling Starfield Canvas**: Hardware-accelerated, zero-lag background canvas rendering slowly drifting **shimmering four-pointed stars (`✦`)** and **soft circular halos**.
+- **iMessage-Style Chat Advisor**: Live AI coach support displaying rich, formatted Markdown, including glowing glassmorphic tables, bold checklists, and clean code blocks.
+- **Symmetrical 2x2 Testimonials**: Balanced, grid-aligned success stories from Indian developer profiles utilizing beautiful custom initial logos.
 
-- User registration and login
-- JWT-protected APIs
-- Profile CRUD with skills, education, and experience
-- Resume upload for PDF files
-- Resume text extraction and skill detection
-- AI-generated missing skills and career path suggestions
-- Landing page plus dedicated auth, dashboard, analysis, and coach pages
-- Dashboard with profile insights and recommendations
-- Career advice chatbot
-- Validation, centralized error handling, and modular folder structure
+---
 
-## Project Structure
+## 🛠️ Tech Stack
+
+- **Frontend**: Vanilla HTML5, CSS3 Grid/Flexbox, Core JavaScript (ES6+), Canvas API
+- **Backend**: Node.js, Express.js (REST API Server)
+- **Database**: MongoDB with Mongoose ODM
+- **Authentication**: Secure JWT (JSON Web Tokens) + bcrypt hashing
+- **AI Engine**: OpenRouter, Google Gemini, Grok, OpenAI, or built-in fallback advisor
+
+---
+
+## 📁 Project Structure
 
 ```text
-client/
-server/
-  config/
-  controllers/
-  middleware/
-  models/
-  routes/
-  services/
-  utils/
-  uploads/
+client/   - Premium Obsidian & Platinum Pro theme frontend files
+server/   - Modular Express API backend services
+  config/      - Database connection configurations
+  controllers/ - Request routers & validation logic
+  middleware/  - JWT auth & centralized error handlers
+  models/      - MongoDB schema definitions (User, Profile, Resume)
+  routes/      - Direct REST endpoints mapping
+  services/    - Multi-model AI prompts & PDF parsing services
+  uploads/     - Sandbox directory for temporary resume storage
 ```
 
-## Setup Instructions
+---
 
-1. Install dependencies:
+## 🚀 Setup & Execution Instructions
 
+### 1. Install Dependencies
+Initialize libraries and dependencies in the root directory:
 ```bash
 npm install
 ```
 
-2. Copy the environment template:
-
+### 2. Configure Environment Variables
+Copy the template variables file to `.env`:
 ```bash
 cp .env.example .env
 ```
+*(On Windows PowerShell, run `Copy-Item .env.example .env`)*
 
-On Windows PowerShell:
-
-```powershell
-Copy-Item .env.example .env
-```
-
-3. Update `.env` with your values:
+Update `.env` with your variables. Note that the API server is configured to run on port **`5051`**:
+- `PORT=5051`
 - `MONGODB_URI`
 - `JWT_SECRET`
-- `AI_PROVIDER`
-- One provider key:
-  - `OPENROUTER_API_KEY`
-  - `GEMINI_API_KEY`
-  - `GROK_API_KEY`
-  - `OPENAI_API_KEY`
+- `AI_PROVIDER` + active API keys
 
-4. Start the Application:
+### 3. Start the Application
 
-You have **two options** for running the application locally:
+You have **two options** for running CareerOS locally:
 
-### Option A: Running Separately (Recommended for local frontend tuning)
-Run the backend API server and frontend client as separate services. This allows you to edit and preview frontend client pages directly using VS Code Live Server (port 5500) or a static server.
+#### Option A: Split-Service Mode (Recommended for Frontend Tuning)
+Run the backend API server and frontend client as separate services.
 
 1. **Start the API Server**:
    ```bash
    npm run server
    ```
-   This runs the Express API server on `http://localhost:5050` with CORS fully enabled for your dev environment.
+   *This launches the Express server on **`http://localhost:5051`** (connected to MongoDB).*
 
-2. **Start the Client / Live Server**:
-   - Option A1: Run `npm run client` to launch a local dev server on `http://localhost:5500`.
-   - Option A2: Open the project in VS Code, right-click `client/index.html` and click **Open with Live Server** (runs on `http://localhost:5500`).
-   
-   *Note: The frontend will automatically detect it's on a client port and map all API requests back to `http://localhost:5050`!*
+2. **Start the Client**:
+   - Run `npm run client` to launch a local dev server on **`http://localhost:5500`**.
+   - Or double-click `client/index.html` to open it directly via the `file:///` protocol (fully supported).
 
-### Option B: Single Host Mode (Production-like)
-Run the backend server and let Express serve the frontend static files on a single port.
+*The frontend automatically detects your local environment and maps all fetch endpoints back to the active API server on **`http://localhost:5051`**!*
+
+#### Option B: Single Host Mode (Production-like)
+Run the backend server and let Express serve static client files directly on a single port.
 
 1. **Start the App**:
    ```bash
    npm start
    ```
-   This starts the Express server and automatically bundles the `client/` folder static assets.
+   *This starts the Express server and bundles all `client/` assets.*
 
-2. **Open**:
+2. **Open in Browser**:
    ```text
-   http://localhost:5050
+   http://localhost:5051
    ```
    
 This starts the site even if MongoDB is not available yet. In that case the frontend still loads, but database-backed features stay limited until `MONGODB_URI` is reachable.
+
+### 4. Running the Integration Tests
+Execute the comprehensive API integration test suite using the built-in Node.js test runner:
+```bash
+npm test
+```
+*This spins up an in-memory MongoDB server instance via `mongodb-memory-server` and runs full API requests through `supertest` to validate authentication, resume parsing, profile updates, and AI integration loops.*
 
 ## AI Provider Setup
 

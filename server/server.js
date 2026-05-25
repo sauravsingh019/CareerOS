@@ -1,7 +1,7 @@
 const app = require("./src/app");
 const connectDatabase = require("./src/config/db");
 
-const PORT = process.env.PORT || 5050;
+const PORT = process.env.PORT || 5051;
 
 const startServer = async () => {
   let databaseReady = false;
