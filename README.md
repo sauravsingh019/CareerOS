@@ -39,7 +39,188 @@ server/   - Modular Express API backend services
   services/    - Multi-model AI prompts & PDF parsing services
   uploads/     - Sandbox directory for temporary resume storage
 ```
+# CareerOS Complete Workflow
 
+```mermaid
+flowchart TB
+
+%% ==========================
+%% USER
+%% ==========================
+
+A([User Opens CareerOS])
+
+A --> B[Landing Page]
+
+B --> C{Authentication}
+
+C -->|Register| D[Create Account]
+
+C -->|Login| E[Verify Credentials]
+
+D --> F[Generate JWT]
+
+E --> F
+
+F --> G[Dashboard]
+
+
+%% ==========================
+%% PROFILE
+%% ==========================
+
+G --> H[Profile Management]
+
+H --> I[Update Personal Information]
+
+I --> J[(MongoDB)]
+
+
+%% ==========================
+%% RESUME
+%% ==========================
+
+G --> K[Upload Resume PDF]
+
+K --> L[PDF Upload API]
+
+L --> M[Resume Parsing Service]
+
+M --> N[Extract Resume Text]
+
+N --> O[Detect Skills]
+
+O --> P[Store Resume]
+
+P --> J
+
+
+%% ==========================
+%% AI ENGINE
+%% ==========================
+
+J --> Q[AI Analysis Engine]
+
+Q --> R{Selected AI Provider}
+
+R --> S[OpenRouter]
+
+R --> T[Google Gemini]
+
+R --> U[Grok]
+
+R --> V[OpenAI]
+
+R --> W[Fallback AI]
+
+S --> X
+
+T --> X
+
+U --> X
+
+V --> X
+
+W --> X
+
+X[Generate Analysis]
+
+X --> Y[Skill Gap Detection]
+
+Y --> Z[Career Recommendations]
+
+Z --> AA[Career Score]
+
+AA --> AB[Dashboard Analytics]
+
+
+%% ==========================
+%% CHATBOT
+%% ==========================
+
+AB --> AC[AI Career Coach]
+
+AC --> AD[User Question]
+
+AD --> AE[AI Prompt Service]
+
+AE --> R
+
+R --> AF[AI Response]
+
+AF --> AG[iMessage Chat UI]
+
+
+%% ==========================
+%% API
+%% ==========================
+
+subgraph Backend
+
+API1[/POST Register/]
+
+API2[/POST Login/]
+
+API3[/GET Profile/]
+
+API4[/PUT Profile/]
+
+API5[/POST Resume Upload/]
+
+API6[/POST AI Analyze/]
+
+API7[/POST AI Chat/]
+
+end
+
+API1 --> J
+
+API2 --> J
+
+API3 --> J
+
+API4 --> J
+
+API5 --> L
+
+API6 --> Q
+
+API7 --> AE
+
+
+%% ==========================
+%% STORAGE
+%% ==========================
+
+subgraph Storage
+
+DB[(MongoDB)]
+
+UPLOADS[(Resume Uploads)]
+
+end
+
+J --> DB
+
+L --> UPLOADS
+
+
+%% ==========================
+%% OUTPUT
+%% ==========================
+
+AG --> AH([Career Guidance])
+
+AB --> AI([Dashboard])
+
+AI --> AJ([Profile Completion])
+
+AI --> AK([Resume Insights])
+
+AI --> AL([Skill Analytics])
+
+AI --> AM([AI Recommendations])
+```
 ---
 
 ## 🚀 Setup & Execution Instructions
